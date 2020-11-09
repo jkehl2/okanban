@@ -1,0 +1,26 @@
+{
+  "name": "okanban-jkehl2",
+  "version": "1.0.0",
+  "description": "## Description du projet",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O-clock-Lyra-JS/okanban-jkehl2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/O-clock-Lyra-JS/okanban-jkehl2/issues"
+  },
+  "homepage": "https://github.com/O-clock-Lyra-JS/okanban-jkehl2#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "sequelize": "^6.3.5"
+  }
+}
