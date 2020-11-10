@@ -17,14 +17,17 @@ const controller_list = {
         try {
             let listes = await List.findAll({
                 include: [{
-                    association: 'cards'
+                    association: 'cards',
+                    include: [{
+                        association: 'tags'
+                    }]
                 }]
             });
             console.log(listes);
             response.status(200).json(JSON.stringify(listes));
-        } catch(error) {
-                console.error(error);
-                response.status(500).send();
+        } catch (error) {
+            console.error(error);
+            response.status(500).send();
         }
     },
 
@@ -44,7 +47,7 @@ const controller_list = {
                 }]
             });
             response.status(200).json(JSON.stringify(listeById));
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             response.status(500).send();
         }
@@ -57,17 +60,10 @@ const controller_list = {
      */
     async postList(request, response) {
         try {
-            let newList = await List.create(request.body, {
-                include: [{
-                    association: 'cards',
-                    include: [{
-                        association: 'tags'
-                    }]
-                }]
-            });
+            let newList = await List.create(request.body);
             newList.save()
             response.status(201).json(JSON.parse(newList));
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             response.status(500).send();
         }
@@ -80,19 +76,15 @@ const controller_list = {
     async deleteList(_, response) {
         try {
             let count = await List.destroy({
-                include: [{
-                    association: 'cards',
-                    include: [{
-                        association: 'tags'
-                    }]
-                }]
+                truncate: true,
+                cascade: true
             });
             if (count > 0) {
                 response.status(200).send();
             } else {
                 response.status(204).send();
             }
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             response.status(500).send();
         }
@@ -107,21 +99,16 @@ const controller_list = {
             let count = await List.destroy({
                 where: {
                     id: request.params.id
-                }
-            }, {
-                include: [{
-                    association: 'cards',
-                    include: [{
-                        association: 'tags'
-                    }]
-                }]
+                },
+                truncate: true,
+                cascade: true
             });
             if (count > 0) {
                 response.status(200).send();
             } else {
                 response.status(204).send();
             }
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             response.status(500).send();
         }
@@ -142,7 +129,7 @@ const controller_list = {
                 }
 
             }
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             response.status(500);
         }
@@ -161,7 +148,7 @@ const controller_list = {
             } else {
                 response.status(204).send();
             }
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             response.status(500).send();
         }

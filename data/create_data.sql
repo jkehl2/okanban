@@ -7,7 +7,7 @@
 BEGIN TRANSACTION;
 
 /* Commencer par supprimer toutes les tables si elles existent */
-DROP TABLE IF EXISTS "list", "card", "tag", "card_has_tag";
+DROP TABLE IF EXISTS "list", "card", "tag", "card_has_tag" CASCADE;
 
 /* Table List */
 CREATE TABLE IF NOT EXISTS "list" (
