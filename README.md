@@ -1,3 +1,35 @@
+## jour 3 : Mise en place API
+
+### Archi
+
+Mettre en place l'architecture "classique" d'une projet express :
+
+- installer les dépendances nécessaires avec npm.
+- dossier `app/controllers`.
+- fichier `app/router.js`.
+- point d'entrée `index.js`.
+
+### Le Train-train Express
+
+Mettre en place le fichier `index.js`. Oui c'est vrai, c'est un peu toujours la même chose...
+
+Note: pensez qu'on va faire des routes POST ! (donc avec des body ...)
+
+### Premiers controller, premières routes
+
+En respectant au maximum les principes de l'architecture REST, commencez par remplir [le tableau des routes](./doc/routes.md). Ensuite, c'est parti pour l'implémentation !
+
+- commencez par toutes les routes "/list", puis "/list/:id", puis passez à /card, etc...
+- ceci n'est qu'un conseil ! si vous préférez faire toutes les routes GET d'abord, puis enchainer sur les POST, etc... libre à vous !
+
+Pour tester toutes ces routes, il existe plusieurs solutions, mais la plus simple reste d'utiliser un petit logiciel :
+
+- [Insomnia](https://support.insomnia.rest/article/23-installation#ubuntu)
+- [POSTMAN](https://www.getpostman.com/)
+- [VSC REST client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+- y'en a probablement d'autres...
+
+---
 
 ## jour 2 : BDD
 
