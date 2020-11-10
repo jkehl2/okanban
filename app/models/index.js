@@ -1,40 +1,66 @@
-const Card = require('./card');
+/** But de ce fichier:
+ * - require tous les models
+ * - créer les associations
+ * - ré-exporter tous les models dans un seul objet
+ **/
+
 const List = require('./list');
+const Card = require('./card');
 const Tag = require('./tag');
-const CardHasTag = require('./cardHasTag');
-const sequelize = require('../DB/sequelize_client');
 
+// une List possède plusieurs Card
 List.hasMany(Card, {
-    foreignKey: 'listId',
-    as: 'cards'
+    // le nom de la clef étrangère
+    foreignKey: "list_id",
+
+    // l'alias de l'association 
+    as: "cards"
 });
 
-// Card.hasOne(List, {
-//     foreignKey: 'listId',
-//     as: 'list'
-// })
+// une Card appartient à une List
+Card.belongsTo(List, {
+    // le nom de la clef étrangère
+    foreignKey: "list_id",
 
-Tag.belongsToMany(Card, {
-    foreignKey: 'tagId',
-    otherKey: 'cardId',
-    as: 'cards',
-    through: CardHasTag
+    // l'alias de l'association 
+    as: "list"
 });
 
+
+// une Card appartient à plusieurs Tag
 Card.belongsToMany(Tag, {
-    foreignKey: 'cardId',
-    otherKey: 'tagId',
-    as: 'tags',
-    through: CardHasTag
+    // le nom de la table de liaison
+    through: "card_has_tag",
+
+    // le nom de la clef qui correspond à Card
+    foreignKey: "card_id",
+
+    // le nom de la clef qui correspond à Tag
+    otherKey: "tag_id",
+
+    // l'alias de l'association
+    as: "tags"
 });
 
-// sequelize.sync({
-//     force: true
-// });
+// un Tag appartient à plusieurs Card
+Tag.belongsToMany(Card, {
+    // le nom de la table de liaison
+    through: "card_has_tag",
 
+    // le nom de la clef qui correspond à Tag
+    foreignKey: "tag_id",
+
+    // le nom de la clef qui correspond à Card
+    otherKey: "card_id",
+
+    // l'alias de l'association
+    as: "cards"
+});
+
+
+// on oublie pas d'exporter !
 module.exports = {
-    Card,
     List,
-    Tag,
-    CardHasTag
+    Card,
+    Tag
 };

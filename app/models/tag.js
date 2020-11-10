@@ -1,22 +1,20 @@
-const sequelize = require('../DB/sequelize_client');
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require('../database');
 
-const {
-    DataTypes,
-    Model
-} = require('sequelize');
+class Tag extends Model {
 
-/**
- * @version 1.0.0
- * @description Tag class model.
- */
-class Tag extends Model {};
+};
+
 
 Tag.init({
-    name: DataTypes.STRING,
-    color: DataTypes.STRING
+    name: DataTypes.TEXT,
+    color: DataTypes.TEXT
 }, {
-    sequelize,
-    tableName: 'tag'
+    // le nom de la table
+    tableName: "tag",
+
+    // l'instance de connexion
+    sequelize
 });
 
 module.exports = Tag;
