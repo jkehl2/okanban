@@ -17,15 +17,14 @@ const controller_list = {
         try {
             let listes = await List.findAll({
                 include: [{
-                    association: 'cards',
-                    include: [{
-                        association: 'tags'
-                    }]
+                    association: 'cards'
                 }]
             });
-            response.StatusCode(200).json(JSON.stringify(listes));
-        } catch {
-            response.StatusCode(500).json(JSON.parse({}));
+            console.log(listes);
+            response.status(200).json(JSON.stringify(listes));
+        } catch(error) {
+                console.error(error);
+                response.status(500).send();
         }
     },
 
@@ -44,9 +43,10 @@ const controller_list = {
                     }]
                 }]
             });
-            response.StatusCode(200).json(JSON.stringify(listeById));
-        } catch {
-            response.StatusCode(500).json(JSON.parse({}));
+            response.status(200).json(JSON.stringify(listeById));
+        } catch(error) {
+            console.error(error);
+            response.status(500).send();
         }
     },
 
@@ -66,9 +66,10 @@ const controller_list = {
                 }]
             });
             newList.save()
-            response.StatusCode(201).json(JSON.parse(newList));
-        } catch {
-            response.StatusCode(500).json(JSON.parse({}));
+            response.status(201).json(JSON.parse(newList));
+        } catch(error) {
+            console.error(error);
+            response.status(500).send();
         }
     },
 
@@ -87,12 +88,13 @@ const controller_list = {
                 }]
             });
             if (count > 0) {
-                response.StatusCode(200).json(JSON.parse({}));
+                response.status(200).send();
             } else {
-                response.StatusCode(204).json(JSON.parse({}));
+                response.status(204).send();
             }
-        } catch {
-            response.StatusCode(500).json(JSON.parse({}));
+        } catch(error) {
+            console.error(error);
+            response.status(500).send();
         }
     },
 
@@ -115,12 +117,13 @@ const controller_list = {
                 }]
             });
             if (count > 0) {
-                response.StatusCode(200).json(JSON.parse({}));
+                response.status(200).send();
             } else {
-                response.StatusCode(204).json(JSON.parse({}));
+                response.status(204).send();
             }
-        } catch {
-            response.StatusCode(500).json(JSON.parse({}));
+        } catch(error) {
+            console.error(error);
+            response.status(500).send();
         }
     },
 
@@ -129,19 +132,21 @@ const controller_list = {
      * @param {Express.Response} response - Express server response
      */
     async patchList(request, response) {
-        response.StatusCode(200).json(JSON.parse({}));
+        response.StatusCode(200);
         try {
             for (let index = 0; index < response.body.listes.length; index++) {
                 let count = await List.update(request.body.listes[index]);
                 if (count == 0) {
-                    response.StatusCode(204).json(JSON.parse({}));
+                    response.status(204).send();
                     return;
                 }
 
             }
-        } catch {
-            response.StatusCode(500).json(JSON.parse({}));
+        } catch(error) {
+            console.error(error);
+            response.status(500);
         }
+        response.send();
     },
 
     /**
@@ -152,12 +157,13 @@ const controller_list = {
         try {
             let count = await List.update(request.body);
             if (count > 0) {
-                response.StatusCode(200).json(JSON.parse({}));
+                response.status(200).send();
             } else {
-                response.StatusCode(204).json(JSON.parse({}));
+                response.status(204).send();
             }
-        } catch {
-            response.StatusCode(500).json(JSON.parse({}));
+        } catch(error) {
+            console.error(error);
+            response.status(500).send();
         }
     },
 
@@ -166,7 +172,7 @@ const controller_list = {
      * @param {Express.Response} response - Express server response
      */
     async notImplemented(_, response) {
-        response.StatusCode(501);
+        response.status(501).send();
     },
 };
 

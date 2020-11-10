@@ -8,8 +8,7 @@ class Card extends Model {
 
 Card.init({
     title: DataTypes.TEXT,
-    position: DataTypes.INTEGER,
-    color: DataTypes.TEXT
+    position: DataTypes.INTEGER
 }, {
     // le nom de la table
     tableName: "card",
