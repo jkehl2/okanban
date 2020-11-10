@@ -7,7 +7,6 @@
     "doc": "doc"
   },
   "scripts": {
-<<<<<<< HEAD
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
@@ -24,23 +23,6 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-=======
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/O-clock-Lyra-JS/okanban-SimonMARTIN87.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/O-clock-Lyra-JS/okanban-SimonMARTIN87/issues"
-  },
-  "homepage": "https://github.com/O-clock-Lyra-JS/okanban-SimonMARTIN87#readme",
-  "dependencies": {
-    "dotenv": "^8.2.0",
->>>>>>> 1c0f8531b9c84d2036ac7f4da701131f8648cff5
     "pg": "^8.4.2",
     "sequelize": "^6.3.5"
   }

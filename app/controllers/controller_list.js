@@ -131,19 +131,13 @@ const controller_list = {
     async patchList(request, response) {
         response.StatusCode(200).json(JSON.parse({}));
         try {
-            for (let index = 0, index < response.body.listes.length, index++) {
-                let count = await List.update(request.body.listes[index], {
-                    include: [{
-                        association: 'cards',
-                        include: [{
-                            association: 'tags'
-                        }]
-                    }]
-                });
+            for (let index = 0; index < response.body.listes.length; index++) {
+                let count = await List.update(request.body.listes[index]);
                 if (count == 0) {
                     response.StatusCode(204).json(JSON.parse({}));
                     return;
                 }
+
             }
         } catch {
             response.StatusCode(500).json(JSON.parse({}));
@@ -156,14 +150,7 @@ const controller_list = {
      */
     async patchListById(request, response) {
         try {
-            let count = await List.update(request.body, {
-                include: [{
-                    association: 'cards',
-                    include: [{
-                        association: 'tags'
-                    }]
-                }]
-            });
+            let count = await List.update(request.body);
             if (count > 0) {
                 response.StatusCode(200).json(JSON.parse({}));
             } else {
