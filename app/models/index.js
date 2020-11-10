@@ -2,17 +2,17 @@ const Card = require('./card');
 const List = require('./list');
 const Tag = require('./tag');
 const CardHasTag = require('./cardHasTag');
-const sequelize = require('sequelize');
+const sequelize = require('../DB/sequelize_client');
 
 List.hasMany(Card, {
     foreignKey: 'listId',
     as: 'cards'
 });
 
-Card.hasOne(List, {
-    foreignKey: 'listId',
-    as: 'list'
-})
+// Card.hasOne(List, {
+//     foreignKey: 'listId',
+//     as: 'list'
+// })
 
 Tag.belongsToMany(Card, {
     foreignKey: 'tagId',
@@ -28,9 +28,9 @@ Card.belongsToMany(Tag, {
     through: CardHasTag
 });
 
-sequelize.sync({
-    force: true
-});
+// sequelize.sync({
+//     force: true
+// });
 
 module.exports = {
     Card,

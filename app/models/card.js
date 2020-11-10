@@ -1,4 +1,4 @@
-const sequelize = require('../../DB/sequelize_client');
+const sequelize = require('../DB/sequelize_client');
 
 const {
     DataTypes,
@@ -15,9 +15,7 @@ Card.init({
     title: DataTypes.STRING,
     position: DataTypes.INTEGER,
     color: DataTypes.STRING,
-    listId: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE    
+    listId: DataTypes.INTEGER    
 }, {
     sequelize,
     tableName: 'card'

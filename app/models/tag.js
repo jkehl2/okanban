@@ -1,4 +1,4 @@
-const sequelize = require('../../DB/sequelize_client');
+const sequelize = require('../DB/sequelize_client');
 
 const {
     DataTypes,
@@ -13,9 +13,7 @@ class Tag extends Model {};
 
 Tag.init({
     name: DataTypes.STRING,
-    color: DataTypes.STRING,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    color: DataTypes.STRING
 }, {
     sequelize,
     tableName: 'tag'

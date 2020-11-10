@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS "tag" (
 );
 
 CREATE TABLE IF NOT EXISTS "cardHasTag" (
-    "card_id" INTEGER NOT NULL REFERENCES "card" ("id"),
-    "tag_id" INTEGER NOT NULL REFERENCES "tag" ("id"),
+    "card_id" INTEGER NOT NULL REFERENCES "card" ("id") ON DELETE CASCADE,
+    "tag_id" INTEGER NOT NULL REFERENCES "tag" ("id") ON DELETE CASCADE,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     "updated_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY("card_id", "tag_id")
@@ -45,7 +45,7 @@ INSERT INTO
     "list" (
         "id",
         "name",
-        "position",
+        "position"
     )
 VALUES
     (1, 'A FAIRE', 0),
@@ -57,37 +57,35 @@ INSERT INTO
         "id",
         "title",
         "position",
-        "list_id",
+        "list_id"
     )
 VALUES
-    (1, "TACHE 1", 0, 3),
-    (2, "TACHE 2", 0, 3),
-    (3, "TACHE 3", 0, 2),
-    (4, "TACHE 4", 0, 2),
-    (5, "TACHE 5", 0, 2),
-    (6, "TACHE 6", 0, 1),
-    (7, "TACHE 7", 0, 1);
+    (1, 'TACHE 1', 0, 3),
+    (2, 'TACHE 2', 0, 3),
+    (3, 'TACHE 3', 0, 2),
+    (4, 'TACHE 4', 0, 2),
+    (5, 'TACHE 5', 0, 2),
+    (6, 'TACHE 6', 0, 1),
+    (7, 'TACHE 7', 0, 1);
 
 INSERT INTO
-    "tag" (
-        "id",
-        "name"
-    )
+    "tag" ("id", "name")
 VALUES
-    (1, "P0"),
-    (2, "P1"),
-    (3, "P2"),
-    (4, "P3"),
-    (5, "P4");
+    (1, 'P0'),
+    (2, 'P1'),
+    (3, 'P2'),
+    (4, 'P3'),
+    (5, 'P4');
 
 INSERT INTO
-    "cardHasTag" ("card_id", "tag_id",)
+    "cardHasTag" ("card_id", "tag_id")
 VALUES
-    (1,1),
-    (2,1),
-    (3,3),
-    (4,3),
-    (5,4),
-    (6,5),
-    (7,5);
+    (1, 1),
+    (2, 1),
+    (3, 3),
+    (4, 3),
+    (5, 4),
+    (6, 5),
+    (7, 5);
+
 COMMIT;

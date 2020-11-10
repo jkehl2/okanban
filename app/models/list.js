@@ -1,4 +1,4 @@
-const sequelize = require('../../DB/sequelize_client');
+const sequelize = require('../DB/sequelize_client');
 
 const {
     DataTypes,
@@ -13,9 +13,7 @@ class List extends Model {};
 
 List.init({
     name: DataTypes.STRING,
-    position: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    position: DataTypes.INTEGER
 }, {
     sequelize,
     tableName: 'list'

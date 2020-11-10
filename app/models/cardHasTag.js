@@ -1,4 +1,4 @@
-const sequelize = require('../../DB/sequelize_client');
+const sequelize = require('../DB/sequelize_client');
 
 const {
     DataTypes,
@@ -13,9 +13,7 @@ class CardHasTag extends Model {};
 
 CardHasTag.init({
     cardId: DataTypes.INTEGER,
-    tagId: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    tagId: DataTypes.INTEGER
 }, {
     sequelize,
     tableName: 'cardHasTag'
