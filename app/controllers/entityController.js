@@ -15,7 +15,7 @@ const findOptions = {
             ['position', 'ASC'],
         ]
     },
-    Tag: null
+    Tag: {}
 };
 
 const entityController = {
