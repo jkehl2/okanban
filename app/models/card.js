@@ -7,7 +7,13 @@ class Card extends Model {
 
 
 Card.init({
-    title: DataTypes.TEXT,
+    title: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }        
+    },
     position: DataTypes.INTEGER,
     color: DataTypes.TEXT
 }, {
