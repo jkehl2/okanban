@@ -17,10 +17,10 @@ const assoController = {
                         message: "ok"
                     });
                 } else {
-                    next()
+                    next();
                 }
             } else {
-                next()
+                next();
             }
         } catch (error) {
             console.error(error);
