@@ -7,8 +7,20 @@ class Tag extends Model {
 
 
 Tag.init({
-    name: DataTypes.TEXT,
-    color: DataTypes.TEXT
+    name: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }        
+    },
+    color: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }        
+    }
 }, {
     // le nom de la table
     tableName: "tag",
