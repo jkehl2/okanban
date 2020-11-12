@@ -1,29 +1,25 @@
-const { Tag } = require('../models');
-const findOptions = {
-    include: {all: true, nested: true},
-    order: [
-        ['position', 'ASC'],
-    ]
-};
+const {
+    Tag
+} = require('../models');
 
 const tagController = {
     getAll: async (req, res, next) => {
         try {
-            const tags = await Tag.findAll(findOptions);
-            res.json( tags );
+            const tags = await Tag.findAll();
+            res.json(tags);
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message,
                 "hint": error.original.hint
-            } );
+            });
         }
     },
 
     getOne: async (req, res, next) => {
         try {
             const tagId = parseInt(req.params.id, 10);
-            const tag = await Tag.findByPk(tagId,findOptions);
+            const tag = await Tag.findByPk(tagId);
             if (tag) {
                 res.json(tag);
             } else {
@@ -31,7 +27,7 @@ const tagController = {
             }
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message,
                 "hint": error.original.hint
             });
@@ -44,7 +40,7 @@ const tagController = {
             res.json(newTag);
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message
             });
         }
@@ -52,14 +48,14 @@ const tagController = {
 
     updateAll: async (req, res, next) => {
         try {
-            const result = await Tag.update( req.body, {
-                where: {}, 
+            const result = await Tag.update(req.body, {
+                where: {},
                 returning: true
             });
             res.json(result[1]);
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message
             });
         }
@@ -77,7 +73,7 @@ const tagController = {
             }
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message
             });
         }
@@ -93,12 +89,14 @@ const tagController = {
             if (nbDestoyed === 0) {
                 next();
             } else {
-                res.json({message: "ok"});
+                res.json({
+                    message: "ok"
+                });
             }
-            
+
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message
             });
         }

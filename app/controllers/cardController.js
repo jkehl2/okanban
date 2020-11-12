@@ -1,6 +1,6 @@
 const { Card } = require('../models');
 const findOptions = {
-    include: {all: true, nested: true},
+    include: [{association: 'tags'}],
     order: [
         ['position', 'ASC'],
     ]
