@@ -1,37 +1,51 @@
-const { Card } = require('../models');
+const models = require('../models');
+console.log(models);
 const findOptions = {
-    include: [{association: 'tags'}],
-    order: [
-        ['position', 'ASC'],
-    ]
+    List: {
+        include: [{
+            association: 'tags'
+        }],
+        order: [
+            ['position', 'ASC'],
+        ]
+    },
+    Card: {
+        include: [{association: 'tags'}],
+        order: [
+            ['position', 'ASC'],
+        ]
+    },
+    Tag: null
 };
 
-const cardController = {
+const entityController = {
     getAll: async (req, res, next) => {
         try {
-            const cards = await Card.findAll(findOptions);
-            res.json( cards );
+            const entityName = req.params.entityName;
+            const entities = await models[entityName].findAll(findOptions[entityName]);
+            res.json(entities);
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message,
                 "hint": error.original.hint
-            } );
+            });
         }
     },
 
     getOne: async (req, res, next) => {
         try {
-            const cardId = parseInt(req.params.id, 10);
-            const card = await Card.findByPk(cardId,findOptions);
-            if (card) {
-                res.json(card);
+            const entityName = req.params.entityName;
+            const entityId = parseInt(req.params.id, 10);
+            const entity = await models[entityName].findByPk(entityId, findOptions[entityName]);
+            if (entity) {
+                res.json(entity);
             } else {
                 next();
             }
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message,
                 "hint": error.original.hint
             });
@@ -40,11 +54,11 @@ const cardController = {
 
     create: async (req, res, next) => {
         try {
-            const newCard = await Card.create(req.body);
-            res.json(newCard);
+            const newEntity = await Card.create(req.body);
+            res.json(newEntity);
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message
             });
         }
@@ -52,14 +66,14 @@ const cardController = {
 
     updateAll: async (req, res, next) => {
         try {
-            const result = await Card.update( req.body, {
-                where: {}, 
+            const result = await Card.update(req.body, {
+                where: {},
                 returning: true
             });
             res.json(result[1]);
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message
             });
         }
@@ -67,17 +81,17 @@ const cardController = {
 
     updateOne: async (req, res, next) => {
         try {
-            const id = parseInt(req.params.id);
-            const card = await Card.findByPk(id);
-            if (card) {
-                await card.update(req.body);
-                res.json(card);
+            const entityId = parseInt(req.params.id);
+            const entity = await Card.findByPk(entityId);
+            if (entity) {
+                await entity.update(req.body);
+                res.json(entity);
             } else {
                 next()
             }
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message
             });
         }
@@ -93,16 +107,18 @@ const cardController = {
             if (nbDestoyed === 0) {
                 next();
             } else {
-                res.json({message: "ok"});
+                res.json({
+                    message: "ok"
+                });
             }
-            
+
         } catch (error) {
             console.error(error);
-            res.status(500).json( {
+            res.status(500).json({
                 "error": error.message
             });
         }
     }
 }
 
-module.exports = cardController;
+module.exports = entityController;
