@@ -1,14 +1,20 @@
 /**
  * @author KEHL Johann <jkehl.dev@gmail.com>
  * @version 1.0.0
- * @description Renderring error class
+ * @description Wrapper module class
  */
-class RenderError {
+class Wrapper {
     constructor(req, res) {
         this.req = req;
         this.res = res;
     }
-
+    doSomething(callBack) {
+        try {
+            callBack();
+        } catch (error) {
+            error => this.renderError(error, 500);
+        }
+    }
     renderError(error, code) {
         console.error(error);
         if (error.original && error.original.hint) {
@@ -24,4 +30,4 @@ class RenderError {
     }
 }
 
-module.exports = RenderError;
+module.exports = Wrapper;

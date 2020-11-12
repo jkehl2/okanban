@@ -1,5 +1,5 @@
 const models = require('../models');
-const RenderError = require('./RenderError');
+const Wrapper = require('./wrapper');
 const findOptions = {
     List: {
         include: [{
@@ -22,20 +22,18 @@ const findOptions = {
 
 const entityController = {
     getAll: async (req, res, next) => {
-        const renderError = new RenderError(req, res);
-        try {
+        const wrapper = new Wrapper(req, res);
+        wrapper.doSomething(() => {
             const entityName = req.params.entityName[0].toUpperCase() + req.params.entityName.slice(1);
             console.log(entityName);
             const entities = await models[entityName].findAll(findOptions[entityName]);
             res.json(entities);
-        } catch (error) {
-            error => renderError(error, 500);
-        }
+        });
     },
 
     getOne: async (req, res, next) => {
-        const renderError = new RenderError(req, res);
-        try {
+        const wrapper = new Wrapper(req, res);
+        wrapper.doSomething(() => {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const entityId = parseInt(req.params.id, 10);
             const entity = await models[entityName].findByPk(entityId, findOptions[entityName]);
@@ -44,39 +42,33 @@ const entityController = {
             } else {
                 next();
             }
-        } catch (error) {
-            error => renderError(error, 500);
-        }
+        });
     },
 
     create: async (req, res, next) => {
-        const renderError = new RenderError(req, res);
-        try {
+        const wrapper = new Wrapper(req, res);
+        wrapper.doSomething(() => {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const newEntity = await models[entityName].create(req.body);
             res.json(newEntity);
-        } catch (error) {
-            error => renderError(error, 500);
-        }
+        });
     },
 
     updateAll: async (req, res, next) => {
-        const renderError = new RenderError(req, res);
-        try {
+        const wrapper = new Wrapper(req, res);
+        wrapper.doSomething(() => {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const result = await models[entityName].update(req.body, {
                 where: {},
                 returning: true
             });
             res.json(result[1]);
-        } catch (error) {
-            error => renderError(error, 500);
-        }
+        });
     },
 
     updateOne: async (req, res, next) => {
-        const renderError = new RenderError(req, res);
-        try {
+        const wrapper = new Wrapper(req, res);
+        wrapper.doSomething(() => {
             const entityId = parseInt(req.params.id);
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const entity = await models[entityName].findByPk(entityId);
@@ -86,14 +78,12 @@ const entityController = {
             } else {
                 next()
             }
-        } catch (error) {
-            error => renderError(error, 500);
-        }
+        });
     },
 
     deleteOne: async (req, res, next) => {
-        const renderError = new RenderError(req, res);
-        try {
+        const wrapper = new Wrapper(req, res);
+        wrapper.doSomething(() => {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const nbDestoyed = await models[entityName].destroy({
                 where: {
@@ -108,9 +98,7 @@ const entityController = {
                 });
             }
 
-        } catch (error) {
-            error => renderError(error, 500);
-        }
+        });
     }
 }
 
