@@ -1,5 +1,4 @@
 const models = require('../models');
-console.log(models);
 const findOptions = {
     List: {
         include: [{
@@ -10,7 +9,9 @@ const findOptions = {
         ]
     },
     Card: {
-        include: [{association: 'tags'}],
+        include: [{
+            association: 'tags'
+        }],
         order: [
             ['position', 'ASC'],
         ]
@@ -21,7 +22,7 @@ const findOptions = {
 const entityController = {
     getAll: async (req, res, next) => {
         try {
-            const entityName = req.params.entityName;
+            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
             const entities = await models[entityName].findAll(findOptions[entityName]);
             res.json(entities);
         } catch (error) {
@@ -35,7 +36,7 @@ const entityController = {
 
     getOne: async (req, res, next) => {
         try {
-            const entityName = req.params.entityName;
+            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
             const entityId = parseInt(req.params.id, 10);
             const entity = await models[entityName].findByPk(entityId, findOptions[entityName]);
             if (entity) {
@@ -54,7 +55,8 @@ const entityController = {
 
     create: async (req, res, next) => {
         try {
-            const newEntity = await Card.create(req.body);
+            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const newEntity = await models[entityName].create(req.body);
             res.json(newEntity);
         } catch (error) {
             console.error(error);
@@ -66,7 +68,8 @@ const entityController = {
 
     updateAll: async (req, res, next) => {
         try {
-            const result = await Card.update(req.body, {
+            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const result = await models[entityName].update(req.body, {
                 where: {},
                 returning: true
             });
@@ -82,7 +85,8 @@ const entityController = {
     updateOne: async (req, res, next) => {
         try {
             const entityId = parseInt(req.params.id);
-            const entity = await Card.findByPk(entityId);
+            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const entity = await models[entityName].findByPk(entityId);
             if (entity) {
                 await entity.update(req.body);
                 res.json(entity);
@@ -99,7 +103,8 @@ const entityController = {
 
     deleteOne: async (req, res, next) => {
         try {
-            const nbDestoyed = await Card.destroy({
+            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const nbDestoyed = await models[entityName].destroy({
                 where: {
                     id: req.params.id
                 }
