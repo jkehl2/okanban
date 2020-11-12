@@ -14,6 +14,6 @@ Pour ces 2 actions, on va donc définir 2 routes supplémentaires, qui sont "hor
 - `PATCH /card/:cardId/tag/:tagId` pour associer la carte X au tag Y.
 - `DELETE /card/:cardId/tag/:tagId` pour dissocier la carte X du tag Y.
 
-Ascute: pour implémenter ces 2 routes, nous aurons besoin des "mixins" de Sequelize, c'est-à-dire des fonctions créées automatiquement lorsqu'on crée une association, et qui servent à manipuler l'association en question.
+Astuce: pour implémenter ces 2 routes, nous aurons besoin des "mixins" de Sequelize, c'est-à-dire des fonctions créées automatiquement lorsqu'on crée une association, et qui servent à manipuler l'association en question.
 
 CF : https://sequelize.org/master/manual/assocs.html#special-methods-mixins-added-to-instances
