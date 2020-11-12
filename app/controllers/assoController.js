@@ -6,13 +6,16 @@ const {
 const assoController = {
     associate: async (req, res, next) => {
         try {
-            const cardId = request.param.cardId;
+            const cardId = parseInt(req.params.cardId, 10);
             const card = await Card.findByPk(cardId);
             if (card) {
-                const tagId = request.param.tagId;
+                const tagId = parseInt(req.params.tagId, 10);
                 const tag = await Tag.findByPk(tagId);
                 if (tag) {
                     card.addTag(tag);
+                    res.json({
+                        message: "ok"
+                    });
                 } else {
                     next()
                 }
@@ -30,13 +33,16 @@ const assoController = {
 
     dissociate: async (req, res, next) => {
         try {
-            const cardId = request.param.cardId;
+            const cardId = parseInt(req.params.cardId, 10);
             const card = await Card.findByPk(cardId);
-            if (card) {
-                const tagId = request.param.tagId;
+            if (card) {                
+                const tagId = parseInt(req.params.tagId, 10);
                 const tag = await Tag.findByPk(tagId);
                 if (tag) {
                     card.removeTag(tag);
+                    res.json({
+                        message: "ok"
+                    });
                 } else {
                     next()
                 }

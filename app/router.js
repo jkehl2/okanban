@@ -7,6 +7,9 @@ const tagController = require('./controllers/tagController');
 const router = express.Router();
 
 /** CRUD List */
+router.post('/card/:cardId/tag/:tagId', assoController.associate );
+router.delete('/card/:cardId/tag/:tagId', assoController.dissociate );
+
 router.get('/list', listController.getAll );
 router.get('/list/:id', listController.getOne );
 router.post('/list', listController.create );
@@ -27,9 +30,6 @@ router.post('/tag', tagController.create );
 router.patch('/tag', tagController.updateAll );
 router.patch('/tag/:id', tagController.updateOne );
 router.delete('/tag/:id', tagController.deleteOne );
-
-router.post('/card/:cardId/tag/:tagId', assoController.associate );
-router.delete('/card/:cardId/tag/:tagId', assoController.dissociate );
 
 router.use( (req,res) => {
     res.status(404).json( {error: "not found"} );
