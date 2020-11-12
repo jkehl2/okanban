@@ -1,4 +1,5 @@
 const models = require('../models');
+const RenderError = require('./RenderError');
 const findOptions = {
     List: {
         include: [{
@@ -21,21 +22,19 @@ const findOptions = {
 
 const entityController = {
     getAll: async (req, res, next) => {
+        const renderError = new RenderError(req, res);
         try {
-            const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
+            const entityName = req.params.entityName[0].toUpperCase() + req.params.entityName.slice(1);
             console.log(entityName);
             const entities = await models[entityName].findAll(findOptions[entityName]);
             res.json(entities);
         } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                "error": error.message,
-                "hint": error.original.hint
-            });
+            error => renderError(error, 500);
         }
     },
 
     getOne: async (req, res, next) => {
+        const renderError = new RenderError(req, res);
         try {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const entityId = parseInt(req.params.id, 10);
@@ -46,28 +45,23 @@ const entityController = {
                 next();
             }
         } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                "error": error.message,
-                "hint": error.original.hint
-            });
+            error => renderError(error, 500);
         }
     },
 
     create: async (req, res, next) => {
+        const renderError = new RenderError(req, res);
         try {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const newEntity = await models[entityName].create(req.body);
             res.json(newEntity);
         } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                "error": error.message
-            });
+            error => renderError(error, 500);
         }
     },
 
     updateAll: async (req, res, next) => {
+        const renderError = new RenderError(req, res);
         try {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const result = await models[entityName].update(req.body, {
@@ -76,14 +70,12 @@ const entityController = {
             });
             res.json(result[1]);
         } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                "error": error.message
-            });
+            error => renderError(error, 500);
         }
     },
 
     updateOne: async (req, res, next) => {
+        const renderError = new RenderError(req, res);
         try {
             const entityId = parseInt(req.params.id);
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
@@ -95,14 +87,12 @@ const entityController = {
                 next()
             }
         } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                "error": error.message
-            });
+            error => renderError(error, 500);
         }
     },
 
     deleteOne: async (req, res, next) => {
+        const renderError = new RenderError(req, res);
         try {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const nbDestoyed = await models[entityName].destroy({
@@ -119,10 +109,7 @@ const entityController = {
             }
 
         } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                "error": error.message
-            });
+            error => renderError(error, 500);
         }
     }
 }
