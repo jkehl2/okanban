@@ -22,7 +22,8 @@ const findOptions = {
 const entityController = {
     getAll: async (req, res, next) => {
         try {
-            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
+            console.log(entityName);
             const entities = await models[entityName].findAll(findOptions[entityName]);
             res.json(entities);
         } catch (error) {
@@ -36,7 +37,7 @@ const entityController = {
 
     getOne: async (req, res, next) => {
         try {
-            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const entityId = parseInt(req.params.id, 10);
             const entity = await models[entityName].findByPk(entityId, findOptions[entityName]);
             if (entity) {
@@ -55,7 +56,7 @@ const entityController = {
 
     create: async (req, res, next) => {
         try {
-            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const newEntity = await models[entityName].create(req.body);
             res.json(newEntity);
         } catch (error) {
@@ -68,7 +69,7 @@ const entityController = {
 
     updateAll: async (req, res, next) => {
         try {
-            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const result = await models[entityName].update(req.body, {
                 where: {},
                 returning: true
@@ -85,7 +86,7 @@ const entityController = {
     updateOne: async (req, res, next) => {
         try {
             const entityId = parseInt(req.params.id);
-            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const entity = await models[entityName].findByPk(entityId);
             if (entity) {
                 await entity.update(req.body);
@@ -103,7 +104,7 @@ const entityController = {
 
     deleteOne: async (req, res, next) => {
         try {
-            const entityName = req.params.entityName.substring(0, 0).toUpperCase() + req.params.entityName.substring(1);
+            const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const nbDestoyed = await models[entityName].destroy({
                 where: {
                     id: req.params.id
