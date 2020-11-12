@@ -23,7 +23,7 @@ const findOptions = {
 const entityController = {
     getAll: async (req, res, next) => {
         const wrapper = new Wrapper(req, res);
-        wrapper.doSomething(() => {
+        await wrapper.doSomething(async () => {
             const entityName = req.params.entityName[0].toUpperCase() + req.params.entityName.slice(1);
             console.log(entityName);
             const entities = await models[entityName].findAll(findOptions[entityName]);
@@ -33,7 +33,7 @@ const entityController = {
 
     getOne: async (req, res, next) => {
         const wrapper = new Wrapper(req, res);
-        wrapper.doSomething(() => {
+        await wrapper.doSomething(async () => {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const entityId = parseInt(req.params.id, 10);
             const entity = await models[entityName].findByPk(entityId, findOptions[entityName]);
@@ -47,7 +47,7 @@ const entityController = {
 
     create: async (req, res, next) => {
         const wrapper = new Wrapper(req, res);
-        wrapper.doSomething(() => {
+        await wrapper.doSomething(async () => {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const newEntity = await models[entityName].create(req.body);
             res.json(newEntity);
@@ -56,7 +56,7 @@ const entityController = {
 
     updateAll: async (req, res, next) => {
         const wrapper = new Wrapper(req, res);
-        wrapper.doSomething(() => {
+        await wrapper.doSomething(async () => {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const result = await models[entityName].update(req.body, {
                 where: {},
@@ -68,7 +68,7 @@ const entityController = {
 
     updateOne: async (req, res, next) => {
         const wrapper = new Wrapper(req, res);
-        wrapper.doSomething(() => {
+        await wrapper.doSomething(async () => {
             const entityId = parseInt(req.params.id);
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const entity = await models[entityName].findByPk(entityId);
@@ -83,7 +83,7 @@ const entityController = {
 
     deleteOne: async (req, res, next) => {
         const wrapper = new Wrapper(req, res);
-        wrapper.doSomething(() => {
+        await wrapper.doSomething(async () => {
             const entityName = req.params.entityName.substring(0, 1).toUpperCase() + req.params.entityName.substring(1);
             const nbDestoyed = await models[entityName].destroy({
                 where: {
