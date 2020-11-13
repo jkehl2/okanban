@@ -1,4 +1,7 @@
-const { Model, DataTypes } = require("sequelize");
+const {
+    Model,
+    DataTypes
+} = require("sequelize");
 const sequelize = require('../database');
 
 class Tag extends Model {
@@ -11,15 +14,19 @@ Tag.init({
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-            notEmpty: true
-        }        
+            notEmpty: true | {
+                msg: "Le nom du tag ne peut pas être vide."
+            }
+        }
     },
     color: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        defaultValue: "#ffffff",
         validate: {
-            notEmpty: true
-        }        
+            notEmpty: true | {
+                msg: "Une couleur doit être précisée."
+            }
+        }
     }
 }, {
     // le nom de la table

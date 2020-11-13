@@ -1,5 +1,4 @@
 const models = require('../models');
-const Wrapper = require('./wrapper');
 const findOptions = {
     List: {
         include: [{

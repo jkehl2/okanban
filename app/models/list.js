@@ -1,4 +1,7 @@
-const { Model, DataTypes } = require("sequelize");
+const {
+    Model,
+    DataTypes
+} = require("sequelize");
 const sequelize = require('../database');
 
 class List extends Model {
@@ -15,10 +18,15 @@ List.init({
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-            notEmpty: true
-        }        
+            notEmpty: true | {
+                msg: "Le nom de la carte ne peut pas être vide."
+            }
+        }
     },
-    position: DataTypes.INTEGER
+    position: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    }
 }, {
     // le nom de la table
     tableName: "list",
