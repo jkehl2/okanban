@@ -2,9 +2,14 @@
 require('dotenv').config();
 const express = require('express');
 const router = require('./app/router');
+// CORS POLICY
+const cors = require('cors');
 
 // on crée une application express
 const app = express();
+
+// Use simple cors policy
+app.use(cors());
 
 // Quelques middlewares bien pratique
 app.use( express.urlencoded({extended: true}) );

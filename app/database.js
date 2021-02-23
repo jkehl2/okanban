@@ -16,6 +16,9 @@ const sequelize = new Sequelize(process.env.PG_URL, {
     }
 });
 
+/* sequelize.sync({
+    force: false
+}); */
 
 // ne pas oublier d'exporter la connextion !
 module.exports = sequelize;
